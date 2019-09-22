@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="styles/style.css" id='style'>
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,700&display=swap" rel="stylesheet">
+	<title>LED Lights Controller - Moorad</title>
+</head>
+
+<body>
+	<div id="loading" style=''>
+		<div id='error'>Hello</div>
+		<img src="img/loading.svg" alt="Loading" id='loading-gif'>
+	</div>
+	<div class="settings" style="display: none;">
+		<button onclick="switchTheme();">WIP</button>
+		<br>
+		<p style='opacity: 0.3;'>Credits to Weeb :).</p>
+	</div>
+	<h1 class='heading'>Lighting Program</h1>
+	<div class="modes-div">
+
+		<div class="option" onClick="solid(this);">
+			<img src="img/solid.png" alt="music" style="width:100%;">
+			<p>Solid Color</p>
+		</div>
+
+		<div class="option" onClick="gradient(this);">
+			<img src="img/gradient.png" alt="music" style="width:100%;">
+			<p>Gradient</p>
+		</div>
+
+		<div class="option" id='spectrum' onClick="spectrum(this);">
+			<img src="img/colourWheel.png" alt="music" style="width:100%;">
+			<p>Spectrum</p>
+		</div>
+
+		<div class="option" onClick="start();" id='music'>
+			<img src="img/music.png" alt="music" style="width:100%;">
+			<p>Music</p>
+		</div>
+
+		<div class="option" onClick="fan(this);">
+			<img src="img/fan.png" alt="music" style="width:100%;">
+			<p>Fan</p>
+		</div>
+		<section id='mode-settings-container'>
+			<p class='heading'>Settings</p>
+
+			<div class="mode-setting s-solid" style='display:none;'>
+				<div class="solid-div setting-section">
+					<div id="color-picker-container"></div>
+				</div>
+			</div>
+
+			<div class='mode-setting s-music'>
+				<div class='visualiser setting-section'>
+					<div class='progress'></div>
+				</div>
+				<div class='setting-section'>
+					<label for="">Multiplier</label><input type="text" name="" id="" value='4'>
+				</div>
+				<div class='setting-section'>
+					<label for="">Sample</label><input type="text" name="" id="" value='4'>
+				</div>
+			</div>
+		</section>
+
+	</div>
+	</div>
+	<div class="slider-container">
+		<p>Brightness</p>
+		<input class="brightness slider" value="0" min="0" max="255" type="range">
+		<div class='sub-btn on' id='night-btn'><img src="img/moon.png" alt=""></div>
+		<div class='sub-btn' id='settings-btn'><img src="img/settings.png" alt="">
+		</div>
+	</div>
+
+	<script>
+		// You can also require other files to run in this process
+		require('./renderer.js')
+	</script>
+	<script src="index.js"></script>
+</body>
+
+</html>
