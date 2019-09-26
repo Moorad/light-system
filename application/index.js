@@ -28,11 +28,11 @@ var mode = 0;
 var brightness = document.getElementsByClassName('brightness')[0];
 var settings = document.getElementById('settings-btn');
 var nightBtn = document.getElementById('night-btn');
-var colorPicker = iro.ColorPicker('#color-picker-container', {
+var colorPickerSolid = iro.ColorPicker('#color-picker-container-solid', {
 	width: 200,
 	color: '#ff0000'
 });
-
+console.log(port)
 port.on('open', () => {
 	setTimeout(() => {
 		main();
@@ -85,18 +85,22 @@ function nightMode(toggle) {
 
 function onColorChange(color, changes) {
 	console.log(color.rgb);
+	console.log(`rbg(${color.rgb.r},${color.rgb.g},${color.rgb.b});`);
+	console.log(document.getElementById('select-colour-solid').style.background)
+	document.getElementById('select-colour-solid').style.background = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b})`;
 	var buf = new Buffer.from([123, color.rgb.r, color.rgb.g, color.rgb.b]);
 	port.write(buf);
 
 }
 
-colorPicker.on('input:end', onColorChange);
+colorPickerSolid.on('input:end', onColorChange);
 
 function error(message) {
 	document.getElementById('loading-gif').style.display = 'none';
 	document.getElementById('error').style.display = 'block';
 	document.getElementById('error').innerHTML = message;
 }
+
 
 function solid(element) {
 	if (mode == 1) {
@@ -111,7 +115,7 @@ function solid(element) {
 		for (var e of document.getElementsByClassName('mode-setting')) {
 			e.style.display = 'none';
 		}
-		document.getElementsByClassName('s-solid')[0].style.display = 'block';
+		document.getElementById('solid-settings').style.display = 'block';
 		element.className += ' on';
 	}
 }
@@ -276,3 +280,5 @@ nightBtn.addEventListener('click', () => {
 	nightMode(values.nightMode);
 	fs.writeFileSync('./config.json', JSON.stringify(values));
 });
+
+ 
