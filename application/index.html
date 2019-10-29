@@ -11,6 +11,7 @@
 <body>
 	<div id="loading" style='display:none;'>
 		<div id='error'>Hello</div>
+		<button id='error-reload' onClick="reinitialising();">Reload</button>
 		<img src="img/loading.svg" alt="Loading" id='loading-gif'>
 	</div>
 
@@ -18,24 +19,24 @@
 	<h1 class='heading'>Lighting Program</h1>
 
 	<div class="option-container">
-		<div class="option" onClick="solid(this);">
+		<div class="option" id='solid-option' onClick="solid();">
 			<img src="img/solid.png" alt="music" style="width:100%;">
 			<p>Solid Color</p>
 		</div>
 
-		<div class="option disable" onClick="gradient(this);">
+		<div class="option disable" id='gradient-option' onClick="gradient();">
 			<img src="img/gradient.png" alt="music" style="width:100%;">
 			<p>Gradient</p>
 		</div>
 
-		<div class="option disable" id='spectrum' onClick="spectrum(this);">
+		<div class="option disable" id='spectrum-option' onClick="spectrum();">
 			<img src="img/colourWheel.png" alt="music" style="width:100%;">
 			<p>Spectrum</p>
 		</div>
 
-		<div class="option disable" onClick="start();" id='music'>
+		<div class="option disable" id='sound-option' onClick="sound();" >
 			<img src="img/music.png" alt="music" style="width:100%;">
-			<p>Music</p>
+			<p>Sound</p>
 		</div>
 
 		<div class="option disable" onClick="fan(this);">
@@ -44,6 +45,7 @@
 		</div>
 	</div>
 
+	<div class='settings-parent-container'>
 	<div class='settings-container'>
 		<p class='heading'>Settings</p>
 		<div id='solid-settings' class="setting-section">
@@ -56,7 +58,34 @@
 			</h2>
 		</div>
 
-		<div class='mode-setting s-music'>
+		<div id='gradient-settings' class="setting-section">
+			<h2>Colours: <div class="tooltip">
+					<div id='select-colour-gradient-2' class='select-colour' style='background:red'> <span
+							class="tooltiptext">
+							<div id="color-picker-container-gradient-1"></div>
+						</span>
+					</div>
+
+					<div class="tooltip">
+						<div id='select-colour-gradient-2' class='select-colour' style='background:red'> <span
+								class="tooltiptext">
+								<div id="color-picker-container-gradient-2"></div>
+							</span>
+						</div>
+			</h2>
+		</div>
+
+		<div id='specturm-settings' class="setting-section">
+			<h2>Colour: <div class="tooltip">
+					<div id='select-colour-solid' class='select-colour' style='background:red'> <span
+							class="tooltiptext">
+							<div id="color-picker-container-solid"></div>
+						</span>
+					</div>
+			</h2>
+		</div>
+
+		<div id='sound-settings' class='setting-section'>
 			<div class='visualiser setting-section'>
 				<div class='progress'></div>
 			</div>
@@ -71,14 +100,14 @@
 
 	<div class='global-settings-container'>
 		<p class='heading'>Global Settings</p>
-		<div class='setting-section' style="display: block;">
+		<div class='global-setting-section' style="display: block;">
 				<label for="">Brightness</label><input class="brightness slider" value="0" min="0" max="255" type="range">
 		</div>
 		
-		<div class='setting-section' style="display: block;">
+		<div class='global-setting-section' style="display: block;">
 				<label for="">Number of LEDs</label><input type="text" name="" id="" value='4'>
 		</div>
-		
+	</div>
 		<!-- <div class="slider-container">
 			<p>Brightness</p>
 			
@@ -88,11 +117,8 @@
 		</div> -->
 	</div>
 
-<script>
-	// You can also require other files to run in this process
-	require('./renderer.js')
-</script>
-<script src="index.js"></script>
+<script src='initialise.js'></script>
+<script src="index.js" id='main-script'></script>
 </body>
 
 </html>

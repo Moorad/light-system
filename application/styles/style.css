@@ -129,12 +129,22 @@ body {
 
 }
 
-button {
+#error-reload {
     color: white;
     background: black;
     border-radius: 4px;
-    background: black;
-    border: 2px solid black;
+	border: 2px solid black;
+	width:4rem;
+	height:2rem;
+    position: absolute;
+    top: 4rem;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    text-align: center;
+    opacity: 0.5;
+	display: none;
 
 }
 
@@ -173,7 +183,7 @@ button {
     border-radius: 4px;
 }
 
-.setting-section {
+.setting-section, .global-setting-section {
 	display: none;
     width: 200px;
     padding: 1rem;
@@ -182,6 +192,7 @@ button {
     background: #171B23;
     border: 6px solid rgba(0,0,0,0.15);
 	margin-bottom: 1rem;
+	text-align: center;
 }
 
 .progress {
@@ -253,6 +264,7 @@ h2 {
 .settings-container {
 	width:49%;
 	display: inline-block;
+	float: left;
 }
 
 .global-settings-container {
