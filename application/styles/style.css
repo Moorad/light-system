@@ -1,10 +1,15 @@
+@keyframes load {
+	from {width:0px;}
+	to{width:240px;}
+}
+
 html,
 body {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     margin: 0 !important;
     padding: 0;
     transition: 0.2s;
-    background: #16181E;
+    background: #121212;
     color: white;
 }
 
@@ -16,18 +21,39 @@ body {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #171B23;
+    background: #121212;
     z-index: 100;
     top: 0;
     opacity: 1;
+	
+}
 
+#loading-indicator {
+	position: absolute;
+	width: 240px;
+	height:4px;
+	background: rgba(48, 79, 254, 0.20);
+	top:0;
+	right:0;
+	left:0;
+	bottom:0;
+	margin:auto;
+}
+
+#loading-indicator-fill {
+	width:0;
+	height: 3px;
+	background: #304FFE;
+	animation-name:load;
+	animation-duration: 5s;
 }
 
 #error {
     width: 100%;
     height: 1rem;
     position: absolute;
-    top: 0;
+	top: 0;
+	
     bottom: 0;
     right: 0;
     left: 0;
@@ -72,8 +98,7 @@ body {
     margin-right: 0.5rem;
     display: inline-block;
     transition: 0.4s;
-    background: #171B23;
-    border: 6px solid rgba(0,0,0,0.15);
+    background: rgba(255, 255, 255, 0.05);
 
 }
 

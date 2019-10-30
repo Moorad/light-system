@@ -57,11 +57,12 @@ port.on('open', () => {
 
 getConfig();
 
+
 function main() {
 	console.log('ready');
-	document.getElementById('loading').className += ' fade';
+	document.getElementById('loading-indicator').className += ' fade';
 	setTimeout(() => {
-		document.getElementById('loading').style.display = 'none';
+		document.getElementById('loading-indicator').style.display = 'none';
 	}, 400);
 
 }
