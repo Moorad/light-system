@@ -2,9 +2,8 @@
 // be executed in the renderer process for that window.
 // All of the Node.js APIs are available in this process.
 
-
 function reinitialising() {
-	document.getElementById('loading-gif').style.display = 'block';
+	document.getElementById('loading-indicator').style.display = 'block';
 	document.getElementById('error').style.display = 'none';
 	document.getElementById('error-reload').style.display = 'none';
 	

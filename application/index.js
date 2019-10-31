@@ -1,11 +1,11 @@
-var iro = require('@jaames/iro');
-var SerialPort = require('serialport');
-var schedule = require('node-schedule');
-var fs = require('fs');
-var {
-	desktopCapturer
-} = require('electron');
-const SmartApp   = require('@smartthings/smartapp');
+const iro = require('@jaames/iro');
+const SerialPort = require('serialport');
+const schedule = require('node-schedule');
+const fs = require('fs');
+const {MDCSlider} = require('@material/slider/dist/mdc.slider');
+// var {
+// 	desktopCapturer
+// } = require('electron');
 var port = new SerialPort('COM3', {
 	baudRate: 9600,
 	autoOpen: false
@@ -16,6 +16,7 @@ var port = new SerialPort('COM3', {
 });
 
 port.open((err) => {
+	console.log(err)
 	if (err) {
 		error(err);
 	}
@@ -346,7 +347,7 @@ function fade(inital,end,step,time,func) {
 
 function error(message) {
 	console.log(message);
-	document.getElementById('loading-gif').style.display = 'none';
+	document.getElementById('loading-indicator').style.display = 'none';
 	document.getElementById('error').style.display = 'block';
 	document.getElementById('error').innerHTML = message;
 	document.getElementById('error-reload').style.display = 'block';
@@ -355,12 +356,12 @@ function error(message) {
 
 // events
 
-brightness.addEventListener('input', () => {
-	var buf = new Buffer.from([124, parseInt(brightness.value)], 0, 2);
-	port.write(buf);
-	values.brightness = parseInt(brightness.value);
-	fs.writeFileSync('./config.json', JSON.stringify(values));
-});
+// brightness.addEventListener('input', () => {
+// 	var buf = new Buffer.from([124, parseInt(brightness.value)], 0, 2);
+// 	port.write(buf);
+// 	values.brightness = parseInt(brightness.value);
+// 	fs.writeFileSync('./config.json', JSON.stringify(values));
+// });
 
 
 
@@ -382,3 +383,15 @@ function rgbToHex(value) {
 	}
 	return hex;
   };
+
+
+// event listener
+const slider = new MDCSlider(document.querySelector('#brightness'));
+slider.listen('MDCSlider:change', () => {
+	console.log(Math.floor(slider.value*(2.55)))	
+
+		var buf = new Buffer.from([124, parseInt(slider.value)], 0, 2);
+		port.write(buf);
+		values.brightness = parseInt(slider.value);
+		fs.writeFileSync('./config.json', JSON.stringify(values));
+});
