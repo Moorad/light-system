@@ -3,9 +3,7 @@ const SerialPort = require('serialport');
 const schedule = require('node-schedule');
 const fs = require('fs');
 const {MDCSlider} = require('@material/slider/dist/mdc.slider');
-// var {
-// 	desktopCapturer
-// } = require('electron');
+const {MDCDialog} = require('@material/dialog/dist/mdc.dialog');
 var port = new SerialPort('COM3', {
 	baudRate: 9600,
 	autoOpen: false
@@ -34,7 +32,7 @@ var scheduleFunction;
 var brightness = document.getElementsByClassName('brightness')[0];
 var settings = document.getElementById('settings-btn');
 var nightBtn = document.getElementById('night-btn');
-var colorPickerSolid = iro.ColorPicker('#color-picker-container-solid', {
+var colorPickerSolid = iro.ColorPicker('#color-picker', {
 	width: 200,
 	color: '#ff0000'
 });
@@ -55,6 +53,10 @@ port.on('open', () => {
 		main();
 	}, 4600);
 });
+
+const slider = new MDCSlider(document.querySelector('#brightness'));
+const dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+console.log(dialog)
 
 getConfig();
 
@@ -222,7 +224,7 @@ function getConfig() {
 		console.log(values)
 		setTimeout(() => {
 			// Brightness
-			brightness.value = values.brightness;
+			slider.value = values.brightness;
 			// fade((x) => {
 			// 	var buf = new Buffer.from([124, x], 0, 2);
 			// 	port.write(buf);
@@ -386,7 +388,6 @@ function rgbToHex(value) {
 
 
 // event listener
-const slider = new MDCSlider(document.querySelector('#brightness'));
 slider.listen('MDCSlider:change', () => {
 	console.log(Math.floor(slider.value*(2.55)))	
 
@@ -394,4 +395,10 @@ slider.listen('MDCSlider:change', () => {
 		port.write(buf);
 		values.brightness = parseInt(slider.value);
 		fs.writeFileSync('./config.json', JSON.stringify(values));
+});
+
+var button = document.getElementById('select-colour-solid')
+button.addEventListener('click',() => {
+	console.log('this works');
+	dialog.show();
 });

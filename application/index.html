@@ -21,6 +21,23 @@
 	</div>
 
 
+	<div class="mdc-dialog mdc-dialog--open" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+		aria-describedby="my-dialog-content">
+		<div class="mdc-dialog__container">
+			<div class="mdc-dialog__surface">
+				<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
+				<h2 class="mdc-dialog__title" id="my-dialog-title">Pick a Color</h2>
+				<div id="color-picker"></div>
+				<footer class="mdc-dialog__actions" >
+					<button type="button" class="mdc-button mdc-button--raised" style='margin:0 auto 1rem auto !important;background:red !important;' data-mdc-dialog-action="no">
+					  <span class="mdc-button__label">Pick</span>
+					</button>
+				  </footer>
+			</div>
+		</div>
+		<div class="mdc-dialog__scrim"></div>
+	</div>
+
 	<h1 class='heading'>Lighting Program</h1>
 
 	<div class="option-container">
@@ -54,13 +71,14 @@
 		<div class='settings-container'>
 			<p class='heading'>Settings</p>
 			<div id='solid-settings' class="setting-section">
-				<h2>Colour: <div class="tooltip">
+				<!-- <h2>Colour: <div class="tooltip">
 						<div id='select-colour-solid' class='select-colour' style='background:red'> <span
 								class="tooltiptext">
 								<div id="color-picker-container-solid"></div>
 							</span>
 						</div>
-				</h2>
+				</h2> -->
+				<button class='mdc-button mdc-button--raised' id='select-colour-solid'>Pick a Colour</button>
 			</div>
 
 			<div id='gradient-settings' class="setting-section">
@@ -109,7 +127,7 @@
 				<label for="">Brightness</label>
 				<!-- <input class="brightness slider" value="0" min="0" max="255" type="range"> -->
 				<div class="mdc-slider" id='brightness' tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100"
-					aria-valuenow="0" aria-label="Select Value" >
+					aria-valuenow="0" aria-label="Select Value">
 					<div class="mdc-slider__track-container">
 						<div class="mdc-slider__track"></div>
 					</div>
@@ -127,10 +145,10 @@
 				<div class="mdc-text-field mdc-text-field--outlined mdc-text-field--no-label">
 					<input type="text" class="mdc-text-field__input" aria-label="Label">
 					<div class="mdc-notched-outline">
-					  <div class="mdc-notched-outline__leading"></div>
-					  <div class="mdc-notched-outline__trailing"></div>
+						<div class="mdc-notched-outline__leading"></div>
+						<div class="mdc-notched-outline__trailing"></div>
 					</div>
-				  </div>
+				</div>
 			</div>
 		</div>
 		<!-- <div class="slider-container">

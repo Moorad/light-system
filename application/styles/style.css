@@ -197,16 +197,6 @@ h2 {
 	display: inline-block;
 }
 
-.select-colour {
-	padding: 0;
-	margin: 0;
-	display: inline-block;
-	width: 50px;
-	height: 16px;
-	border-radius: 4px;
-}
-
-
 .tooltip {
 	position: relative;
 	display: inline-block;
@@ -251,4 +241,21 @@ h2 {
 	width:50%;
 	display: inline-block;
 	
+}
+
+.mdc-notched-outline {
+	color:white !important;
+	border-color:white !important;
+}
+
+.mdc-dialog__surface {
+	background: rgb(34,34,34) !important;
+}
+
+.mdc-dialog__title {
+	color:white !important;
+}
+
+#color-picker {
+	margin: 0.5rem auto 1.5rem auto;
 }
