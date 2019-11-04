@@ -1,13 +1,15 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "lightsystem",
+  "version": "0.1.0",
+  "description": "A simple arduino based led strip light system",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "rebuild": "electron-rebuild -f -w yourmodule"
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "build": {
+	"appId": "com.lightsystem.app"
+  },
   "keywords": [
     "Electron",
     "quick",
@@ -19,10 +21,12 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^6.0.10",
+    "electron-builder": "^22.1.0",
     "electron-rebuild": "^1.8.6"
   },
   "dependencies": {
     "@jaames/iro": "^4.5.1",
+    "a-color-picker": "^1.2.1",
     "material-components-web": "^3.2.0",
     "node-schedule": "^1.3.2",
     "serialport": "^7.1.5"

@@ -256,6 +256,23 @@ h2 {
 	color:white !important;
 }
 
-#color-picker {
+#colour-picker {
 	margin: 0.5rem auto 1.5rem auto;
+}
+
+.a-color-picker {
+	background-color: #ffffff0A !important;
+}
+
+.a-color-picker-row {
+	border:0 !important;
+}
+
+.mdc-text-field__input {
+	color:white !important;
+	padding: 0 !important;
+}
+
+.mdc-notched-outline * {
+	border-color: white !important;
 }

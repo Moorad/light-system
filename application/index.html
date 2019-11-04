@@ -21,16 +21,16 @@
 	</div>
 
 
-	<div class="mdc-dialog mdc-dialog--open" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
+	<div class="mdc-dialog" role="alertdialog" aria-modal="true" aria-labelledby="my-dialog-title"
 		aria-describedby="my-dialog-content">
 		<div class="mdc-dialog__container">
 			<div class="mdc-dialog__surface">
 				<!-- Title cannot contain leading whitespace due to mdc-typography-baseline-top() -->
 				<h2 class="mdc-dialog__title" id="my-dialog-title">Pick a Color</h2>
-				<div id="color-picker"></div>
+				<div id="colour-picker" acp-color="#EFE9E7"></div>
 				<footer class="mdc-dialog__actions" >
-					<button type="button" class="mdc-button mdc-button--raised" style='margin:0 auto 1rem auto !important;background:red !important;' data-mdc-dialog-action="no">
-					  <span class="mdc-button__label">Pick</span>
+					<button type="button" class="mdc-button mdc-button--raised" id='colour-picker-button' style='margin:0 auto 1rem auto !important;' data-mdc-dialog-action="no">
+					  <span class="mdc-button__label" '>Pick</span>
 					</button>
 				  </footer>
 			</div>

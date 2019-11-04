@@ -2,8 +2,13 @@ const iro = require('@jaames/iro');
 const SerialPort = require('serialport');
 const schedule = require('node-schedule');
 const fs = require('fs');
-const {MDCSlider} = require('@material/slider/dist/mdc.slider');
-const {MDCDialog} = require('@material/dialog/dist/mdc.dialog');
+const {
+	MDCSlider
+} = require('@material/slider/dist/mdc.slider');
+const {
+	MDCDialog
+} = require('@material/dialog/dist/mdc.dialog');
+const AColorPicker = require('a-color-picker');
 var port = new SerialPort('COM3', {
 	baudRate: 9600,
 	autoOpen: false
@@ -32,21 +37,7 @@ var scheduleFunction;
 var brightness = document.getElementsByClassName('brightness')[0];
 var settings = document.getElementById('settings-btn');
 var nightBtn = document.getElementById('night-btn');
-var colorPickerSolid = iro.ColorPicker('#color-picker', {
-	width: 200,
-	color: '#ff0000'
-});
-
-var colorPickerGradient1 = iro.ColorPicker('#color-picker-container-gradient-1', {
-	width: 200,
-	color: '#ff0000'
-});
-
-var colorPickerGradient2 = iro.ColorPicker('#color-picker-container-gradient-2', {
-	width: 200,
-	color: '#ff0000'
-});
-
+let globalColour = 'rgb(255, 255, 255)';
 console.log(port);
 port.on('open', () => {
 	setTimeout(() => {
@@ -69,8 +60,6 @@ function main() {
 	}, 400);
 
 }
-
-fade([0,0,0],[255,255,255],124,100,() => {});
 
 // function nightMode(toggle) {
 // 	if (toggle) {
@@ -105,25 +94,6 @@ fade([0,0,0],[255,255,255],124,100,() => {});
 // 	}
 // }
 
-function onColorChange(color, changes) {
-	console.error([color.rgb.r,color.rgb.g,color.rgb.b])
-	console.error(values.data.color)
-	document.getElementById('select-colour-solid').style.background = `rgb(${color.rgb.r},${color.rgb.g},${color.rgb.b})`;
-	if (values.data.color[0] == color.rgb.r && values.data.color[1] == color.rgb.g && values.data.color[2] == color.rgb.b) {
-		var buf = new Buffer.from([123, color.rgb.r,color.rgb.g,color.rgb.b]);
-		port.write(buf);
-	} else {
-		fade(values.data.color,[color.rgb.r,color.rgb.g,color.rgb.b],48,20,(value) => {
-			console.error(value)
-			value = [Math.floor(value[0]),Math.floor(value[1]),Math.floor(value[2])];
-			console.warn(value)
-			var buf = new Buffer.from([123, value[0],value[1],value[2]]);
-			port.write(buf);
-		});
-		values.data.color = [color.rgb.r, color.rgb.g, color.rgb.b]
-		setConfig();
-	}
-}
 
 function onColorChangeG1(color, changes) {
 	console.log(color.rgb);
@@ -141,9 +111,9 @@ function onColorChangeG2(color, changes) {
 
 }
 
-colorPickerSolid.on('input:end', onColorChange);
-colorPickerGradient1.on('input:end', onColorChangeG1);
-colorPickerGradient2.on('input:end', onColorChangeG2);
+// colorPickerSolid.on('input:end', onColorChange);
+// colorPickerGradient1.on('input:end', onColorChangeG1);
+// colorPickerGradient2.on('input:end', onColorChangeG2);
 
 function solid() {
 	var element = document.getElementById('solid-option');
@@ -229,7 +199,7 @@ function getConfig() {
 			// 	var buf = new Buffer.from([124, x], 0, 2);
 			// 	port.write(buf);
 			// }, values.brightness, 10);
-			fade([0],[255],255,10,(value) => {
+			fade([0], [255], 255, 10, (value) => {
 				console.log(value)
 				var buf = new Buffer.from([124, value[0]], 0, 2);
 				port.write(buf);
@@ -237,9 +207,9 @@ function getConfig() {
 
 			// Mode
 			if (values.mode == 1) {
-				let temp = {rgb:{r:values.data.color[0],g:values.data.color[1],b:values.data.color[2]}};
+				// let temp = {rgb:{r:values.data.color[0],g:values.data.color[1],b:values.data.color[2]}};
 				solid();
-				onColorChange(temp);
+				// onColorChange(temp);
 			} else if (values.mode == 2) {
 				gradient();
 			} else if (values.mode == 3) {
@@ -324,19 +294,19 @@ function start() {
 	}
 }
 
-function fade(inital,end,step,time,func) {
+function fade(inital, end, step, time, func) {
 	let difference = [];
-	for (let i = 0;i < inital.length;i++) {
-		difference.push((end[i]-inital[i])/step);
+	for (let i = 0; i < inital.length; i++) {
+		difference.push((end[i] - inital[i]) / step);
 	}
 	console.log(difference);
-	
+
 	var counter = 0;
 	var repeat = setInterval(function () {
-		for(let i = 0;i< difference.length;i++) {
+		for (let i = 0; i < difference.length; i++) {
 			inital[i] += difference[i]
 			if (inital[i] < 0) {
-				inital[i] = 0; 
+				inital[i] = 0;
 			}
 		}
 		func(inital);
@@ -378,27 +348,72 @@ function error(message) {
 // });
 
 
-function rgbToHex(value) { 
+function rgbToHex(value) {
 	var hex = Number(value).toString(16);
 	if (hex.length < 2) {
-		 hex = '0' + hex;
+		hex = '0' + hex;
 	}
 	return hex;
-  };
+};
 
 
 // event listener
 slider.listen('MDCSlider:change', () => {
-	console.log(Math.floor(slider.value*(2.55)))	
+	console.log(Math.floor(slider.value * (2.55)))
 
-		var buf = new Buffer.from([124, parseInt(slider.value)], 0, 2);
-		port.write(buf);
-		values.brightness = parseInt(slider.value);
-		fs.writeFileSync('./config.json', JSON.stringify(values));
+	var buf = new Buffer.from([124, parseInt(slider.value)], 0, 2);
+	port.write(buf);
+	values.brightness = parseInt(slider.value);
+	fs.writeFileSync('./config.json', JSON.stringify(values));
 });
 
 var button = document.getElementById('select-colour-solid')
-button.addEventListener('click',() => {
+button.addEventListener('click', () => {
 	console.log('this works');
-	dialog.show();
+	colorPicker((colour) => {
+		console.log(colour)
+		document.getElementById('select-colour-solid').style.backgroundColor = `rgb(${colour[0]},${colour[1]},${colour[2]})`;
+
+		if (values.data.color[0] == colour[0] && values.data.color[1] == colour[1] && values.data.color[2] == colour[2]) {
+			var buf = new Buffer.from([123, colour[0], colour[1], colour[2]]);
+			port.write(buf);
+		} else {
+			fade(values.data.color, [colour[0], colour[1], colour[2]], 48, 20, (value) => {
+				value = [Math.floor(value[0]), Math.floor(value[1]), Math.floor(value[2])];
+				var buf = new Buffer.from([123, value[0], value[1], value[2]]);
+				port.write(buf);
+			});
+			values.data.color = [colour[0], colour[1], colour[2]]
+			setConfig();
+		}
+	});
+});
+
+
+
+
+
+function colorPicker(callback) {
+	document.getElementsByClassName('mdc-dialog')[0].className += ' mdc-dialog--open';
+
+
+
+	document.getElementById('colour-picker-button').addEventListener('click', () => {
+		document.getElementsByClassName('mdc-dialog--open')[0].classList.remove('mdc-dialog--open')
+		console.log(globalColour);
+		globalColour = globalColour.replace('rgb(', '');
+		globalColour = globalColour.replace(')', '');
+		globalColour = globalColour.split(', ');
+		globalColour = globalColour.map(item => parseInt(item))
+		callback(globalColour);
+	});
+}
+
+
+//
+
+AColorPicker.from('#colour-picker').on('change', (picker, colour) => {
+	console.log(colour);
+	globalColour = colour.toString();
+	document.getElementById('colour-picker-button').style.background = colour.toString();
 });
