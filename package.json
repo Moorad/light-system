@@ -8,7 +8,7 @@
     "rebuild": "electron-rebuild -f -w yourmodule"
   },
   "build": {
-	"appId": "com.lightsystem.app"
+    "appId": "com.lightsystem.app"
   },
   "keywords": [
     "Electron",
@@ -29,6 +29,7 @@
     "a-color-picker": "^1.2.1",
     "material-components-web": "^3.2.0",
     "node-schedule": "^1.3.2",
-    "serialport": "^7.1.5"
+    "npm": "^6.13.0",
+    "serialport": "^8.0.5"
   }
 }

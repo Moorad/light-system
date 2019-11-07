@@ -276,3 +276,12 @@ h2 {
 .mdc-notched-outline * {
 	border-color: white !important;
 }
+
+.mdc-text-field {
+	height: 35px !important;
+	margin-top:1rem;
+}
+
+.mdc-text-field input {
+	margin-left:10px;
+}
